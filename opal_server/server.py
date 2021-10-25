@@ -1,6 +1,5 @@
 import os
 import asyncio
-import uuid
 import shutil
 from functools import partial
 from typing import Optional, List
@@ -30,6 +29,7 @@ from opal_server.policy.watcher import (setup_watcher_task,
 from opal_server.policy.watcher.task import PolicyWatcherTask
 from opal_server.publisher import setup_publisher_task
 from opal_server.pubsub import PubSub
+from opal_server.statistics import OpalStatistics
 
 
 class OpalServer:
@@ -213,6 +213,11 @@ class OpalServer:
         if self.publisher is not None:
             async with self.publisher:
                 if self._init_policy_watcher:
+                    self.opal_statistics = OpalStatistics(self.pubsub.endpoint)
+                    await self.opal_statistics.run()
+                    self.pubsub.endpoint.notifier.add_on_unsubscribe_callback(self.opal_statistics.remove_client)
+
+
                     # repo watcher is enabled, but we want only one worker to run it
                     # (otherwise for each new commit, we will publish multiple updates via pub/sub).
                     # leadership is determined by the first worker to obtain a lock
