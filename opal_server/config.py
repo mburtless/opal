@@ -59,6 +59,9 @@ class OpalServerConfig(Confi):
     # publisher
     PUBLISHER_ENABLED = confi.bool("PUBLISHER_ENABLED", True)
 
+    # statistics
+    MAX_CHANNELS_PER_CLIENT = confi.int("MAX_CHANNELS_PER_CLIENT", 15)
+
     # Data updates
     ALL_DATA_TOPIC = confi.str("ALL_DATA_TOPIC", "policy_data", description="Top level topic for data")
     ALL_DATA_ROUTE = confi.str("ALL_DATA_ROUTE", "/policy-data")
