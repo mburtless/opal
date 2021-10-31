@@ -200,7 +200,7 @@ class OpalServer:
         @app.on_event("startup")
         async def startup_event():
             logger.info("triggered startup event")
-            asyncio.create_task(self.start_server_background_tasks(app))
+            asyncio.create_task(self.start_server_background_tasks())
 
         @app.on_event("shutdown")
         async def shutdown_event():
@@ -209,7 +209,7 @@ class OpalServer:
 
         return app
 
-    async def start_server_background_tasks(self, app: FastAPI):
+    async def start_server_background_tasks(self):
         """
         starts the background processes (as asyncio tasks) if such are configured.
 
