@@ -41,6 +41,7 @@ class PolicyUpdater:
         policy_store: BasePolicyStoreClient = None,
         data_fetcher: Optional[DataFetcher] = None,
         callbacks_register: Optional[CallbacksRegister] = None,
+        opal_client_id: str = None
     ):
         """inits the policy updater.
 
